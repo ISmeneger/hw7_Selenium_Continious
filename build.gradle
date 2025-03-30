@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group = 'Ilya_S'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    implementation("org.seleniumhq.selenium:selenium-java:4.30.0")
+    testImplementation 'org.assertj:assertj-core:3.25.3'
+    implementation 'commons-io:commons-io:2.16.0'
+}
+
+test {
+    useJUnitPlatform()
+}
