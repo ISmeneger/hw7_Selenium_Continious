@@ -64,5 +64,4 @@ public class WebFormSteps {
         Thread.sleep(3000);
         SlowCalculatorButton.click();
     }
-
 }
