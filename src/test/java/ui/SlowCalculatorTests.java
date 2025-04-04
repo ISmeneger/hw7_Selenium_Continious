@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,14 +12,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static steps.WebFormSteps.openSlowCalculatorPage;
 
 public class SlowCalculatorTests {
     WebDriver driver;
     WebDriverWait wait;
     private static final String BASE_URL = "https://bonigarcia.dev/selenium-webdriver-java/";
+
     By zeroButtonLocator = By.xpath("//div[@class = 'keys']/span[text() = '0']");
     By oneButtonLocator = By.xpath("//div[@class = 'keys']/span[text() = '1']");
     By twoButtonLocator = By.xpath("//div[@class = 'keys']/span[text() = '2']");
@@ -40,7 +38,6 @@ public class SlowCalculatorTests {
     By pointButtonLocator = By.xpath("//div[@class = 'keys']/span[text() = '.']");
     By resultField = By.xpath("//div[@class = 'screen']");
 
-
     @BeforeEach
     void start() throws InterruptedException {
         driver = new ChromeDriver();
@@ -57,19 +54,21 @@ public class SlowCalculatorTests {
 
     @Test
     void checkSlowCalcSumTest() {
+        String number = "22";
         driver.findElement(fiveButtonLocator).click();
         driver.findElement(plusButtonLocator).click();
         driver.findElement(oneButtonLocator).click();
         driver.findElement(sevenButtonLocator).click();
         driver.findElement(equalButtonLocator).click();
 
-        wait.until(ExpectedConditions.textToBe(resultField, "22"));
+        wait.until(ExpectedConditions.textToBe(resultField, number));
 
-        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo("22");
+        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo(number);
     }
 
     @Test
     void checkSlowCalcSubtractionTest() {
+        String number = "86";
         driver.findElement(oneButtonLocator).click();
         driver.findElement(twoButtonLocator).click();
         driver.findElement(zeroButtonLocator).click();
@@ -78,38 +77,41 @@ public class SlowCalculatorTests {
         driver.findElement(fourButtonLocator).click();
         driver.findElement(equalButtonLocator).click();
 
-        wait.until(ExpectedConditions.textToBe(resultField, "86"));
+        wait.until(ExpectedConditions.textToBe(resultField, number));
 
-        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo("86");
+        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo(number);
     }
 
     @Test
     void checkSlowCalcMultiplyTest() {
+        String number = "48";
         driver.findElement(sixButtonLocator).click();
         driver.findElement(multiplyButtonLocator).click();
         driver.findElement(eightButtonLocator).click();
         driver.findElement(equalButtonLocator).click();
 
-        wait.until(ExpectedConditions.textToBe(resultField, "48"));
+        wait.until(ExpectedConditions.textToBe(resultField, number));
 
-        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo("48");
+        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo(number);
     }
 
     @Test
     void checkSlowCalcDivisionTest() {
+        String number = "9";
         driver.findElement(eightButtonLocator).click();
         driver.findElement(oneButtonLocator).click();
         driver.findElement(divideButtonLocator).click();
         driver.findElement(nineButtonLocator).click();
         driver.findElement(equalButtonLocator).click();
 
-        wait.until(ExpectedConditions.textToBe(resultField, "9"));
+        wait.until(ExpectedConditions.textToBe(resultField, number));
 
-        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo("9");
+        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo(number);
     }
 
     @Test
     void checkSlowCalcDoubleTest() {
+        String number = "24.5";
         driver.findElement(fiveButtonLocator).click();
         driver.findElement(zeroButtonLocator).click();
         driver.findElement(minusButtonLocator).click();
@@ -119,8 +121,8 @@ public class SlowCalculatorTests {
         driver.findElement(fiveButtonLocator).click();
         driver.findElement(equalButtonLocator).click();
 
-        wait.until(ExpectedConditions.textToBe(resultField, "24.5"));
+        wait.until(ExpectedConditions.textToBe(resultField, number));
 
-        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo("24.5");
+        assertThat(driver.findElement(By.xpath("//div[@class = 'screen']")).getText()).isEqualTo(number);
     }
 }
