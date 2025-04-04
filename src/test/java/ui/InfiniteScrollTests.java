@@ -20,14 +20,6 @@ public class InfiniteScrollTests {
     WebDriver driver;
     private static final String BASE_URL = "https://bonigarcia.dev/selenium-webdriver-java/";
 
-    @BeforeEach
-    void start() throws InterruptedException {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get(BASE_URL);
-        openInfiniteScrollPage(driver);
-    }
-
     @AfterEach
     void tearDown() {
         driver.quit();
@@ -35,6 +27,11 @@ public class InfiniteScrollTests {
 
     @Test
     void infiniteScrollTest() throws InterruptedException, IOException {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get(BASE_URL);
+        openInfiniteScrollPage(driver);
+
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
