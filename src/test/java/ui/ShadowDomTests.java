@@ -2,6 +2,7 @@ package ui;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,12 +29,18 @@ public class ShadowDomTests {
     }
 
     @Test
+    @Tag("positive")
     void ShadowDomTest() {
-        assertThrows(NoSuchElementException.class, () -> driver.findElement(By.cssSelector("p")));
         WebElement content = driver.findElement(By.id("content"));
         SearchContext shadowRoot = content.getShadowRoot();
         WebElement textShadowDom = shadowRoot.findElement(By.cssSelector("p"));
 
         assertEquals("Hello Shadow DOM", textShadowDom.getText());
+    }
+
+    @Test
+    @Tag("negative")
+    void ShadowDomInvalidTest() {
+        assertThrows(NoSuchElementException.class, () -> driver.findElement(By.cssSelector("p")));
     }
 }
