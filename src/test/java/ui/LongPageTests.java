@@ -35,6 +35,7 @@ public class LongPageTests {
     @Test
     void longPageTest() throws InterruptedException {
         Thread.sleep(2000);
+
         WebElement footerLink = driver.findElement(By.className("text-muted"));
         new Actions(driver)
                 .scrollToElement(footerLink)
@@ -47,6 +48,7 @@ public class LongPageTests {
     @Test
     void longPageTest2() throws InterruptedException {
         Thread.sleep(2000);
+
         WebElement footerLink = driver.findElement(By.className("text-muted"));
         int maxPageDownSteps = 3;
         for (int i = 0; i < maxPageDownSteps; i++) {
@@ -62,6 +64,7 @@ public class LongPageTests {
     @Test
     void longPageTest3() throws InterruptedException {
         Thread.sleep(2000);
+
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
