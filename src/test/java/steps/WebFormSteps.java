@@ -23,6 +23,7 @@ public class WebFormSteps {
         shadowDomButton.click();
     }
 
+//    @Step("Open cookie page")
     public static void openCookiesPage(WebDriver driver) throws InterruptedException {
         WebElement cookiesButton = driver.findElement(By.xpath("//a[@href = 'cookies.html']"));
         Thread.sleep(3000);
