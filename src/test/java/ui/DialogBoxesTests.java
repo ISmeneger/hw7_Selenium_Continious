@@ -42,6 +42,7 @@ public class DialogBoxesTests {
         wait.until(ExpectedConditions.alertIsPresent());
         Alert launchAlert = driver.switchTo().alert();
         String launchAlertText = launchAlert.getText();
+
         assertThat(launchAlertText).isEqualTo("Hello world!");
         Thread.sleep(2000);
         launchAlert.accept();
@@ -49,58 +50,87 @@ public class DialogBoxesTests {
 
     @Test
     @Order(2)
-    void launchConfirmTest() throws InterruptedException {
+    void launchConfirmChooseOkTest() throws InterruptedException {
         WebElement launchConfirmButton = driver.findElement(By.id("my-confirm"));
         launchConfirmButton.click();
         wait.until(ExpectedConditions.alertIsPresent());
         Alert launchConfirm = driver.switchTo().alert();
         String launchAlertText = launchConfirm.getText();
+
         assertThat(launchAlertText).isEqualTo("Is this correct?");
         launchConfirm.accept();
-        assertThat(driver.findElement(By.id("confirm-text")).getText()).isEqualTo("You chose: true");
-        Thread.sleep(2000);
 
-        launchConfirmButton.click();
-        launchConfirm.dismiss();
-        assertThat(driver.findElement(By.id("confirm-text")).getText()).isEqualTo("You chose: false");
+        assertThat(driver.findElement(By.id("confirm-text")).getText()).isEqualTo("You chose: true");
         Thread.sleep(2000);
     }
 
     @Test
     @Order(3)
-    void launchPromptTest() throws InterruptedException {
-        WebElement launchPromptButton = driver.findElement(By.id("my-prompt"));
-        launchPromptButton.click();
-        Alert launchPrompt = driver.switchTo().alert();
-        String launchPromptText = launchPrompt.getText();
-        assertThat(launchPromptText).isEqualTo("Please enter your name");
-        launchPrompt.sendKeys("Test");
-        launchPrompt.accept();
-        assertThat(driver.findElement(By.id("prompt-text")).getText()).isEqualTo("You typed: Test");
-        Thread.sleep(2000);
+    void launchConfirmChooseCancelTest() throws InterruptedException {
+        WebElement launchConfirmButton = driver.findElement(By.id("my-confirm"));
+        launchConfirmButton.click();
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert launchConfirm = driver.switchTo().alert();
+        launchConfirm.dismiss();
 
-        launchPromptButton.click();
-        launchPrompt.sendKeys("Test");
-        launchPrompt.dismiss();
-        assertThat(driver.findElement(By.id("prompt-text")).getText()).isEqualTo("You typed: null");
+        assertThat(driver.findElement(By.id("confirm-text")).getText()).isEqualTo("You chose: false");
         Thread.sleep(2000);
     }
 
     @Test
     @Order(4)
-    void launchModalTest() throws InterruptedException {
+    void launchPromptChooseOkTest() throws InterruptedException {
+        WebElement launchPromptButton = driver.findElement(By.id("my-prompt"));
+        launchPromptButton.click();
+        Alert launchPrompt = driver.switchTo().alert();
+        String launchPromptText = launchPrompt.getText();
+
+        assertThat(launchPromptText).isEqualTo("Please enter your name");
+        launchPrompt.sendKeys("Test");
+        launchPrompt.accept();
+
+        assertThat(driver.findElement(By.id("prompt-text")).getText()).isEqualTo("You typed: Test");
+        Thread.sleep(2000);
+    }
+
+
+    @Test
+    @Order(5)
+    void launchPromptChooseCancelTest() throws InterruptedException {
+        WebElement launchPromptButton = driver.findElement(By.id("my-prompt"));
+        launchPromptButton.click();
+        Alert launchPrompt = driver.switchTo().alert();
+        launchPrompt.sendKeys("Test");
+        launchPrompt.dismiss();
+
+        assertThat(driver.findElement(By.id("prompt-text")).getText()).isEqualTo("You typed: null");
+        Thread.sleep(2000);
+    }
+
+    @Test
+    @Order(6)
+    void launchModalChooseSaveChangeTest() throws InterruptedException {
         WebElement launchModalButton = driver.findElement(By.id("my-modal"));
         launchModalButton.click();
+
         WebElement saveChanges = driver.findElement(By.xpath("//button[normalize-space() = 'Save changes']"));
         wait.until(ExpectedConditions.elementToBeClickable(saveChanges));
         saveChanges.click();
+
         Thread.sleep(2000);
         assertThat(driver.findElement(By.id("modal-text")).getText()).isEqualTo("You chose: Save changes");
+    }
 
+    @Test
+    @Order(7)
+    void launchModalChooseCloseTest() throws InterruptedException {
+        WebElement launchModalButton = driver.findElement(By.id("my-modal"));
         launchModalButton.click();
+
         WebElement close = driver.findElement(By.xpath("//button[text() = 'Close']"));
         wait.until(ExpectedConditions.elementToBeClickable(close));
         close.click();
+
         assertThat(driver.findElement(By.id("modal-text")).getText()).isEqualTo("You chose: Close");
         Thread.sleep(2000);
     }
