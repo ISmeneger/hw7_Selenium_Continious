@@ -2,6 +2,7 @@ package ui;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -31,20 +32,36 @@ public class FramesTests {
     }
 
     @Test
-    void FramesTest() {
-        assertThrows(NoSuchElementException.class, () -> driver.findElement(By.className("lead")));
-
+    @Tag("positive")
+    void FramesTest1() {
         WebElement frameBodyElement = driver.findElement(By.name("frame-body"));
         driver.switchTo().frame(frameBodyElement);
 
-        assertThrows(NoSuchElementException.class, () -> driver.findElement(By.className("display-6")));
-        assertThat(driver.findElement(By.className("lead")).getText()).contains("Lorem ipsum dolor sit amet consectetur adipiscing");
+        assertThat(driver.findElement(By.className("lead")).getText())
+                .contains("Lorem ipsum dolor sit amet consectetur adipiscing");
+    }
 
+    @Test
+    @Tag("positive")
+    void FramesTest2() {
+        WebElement frameBodyElement = driver.findElement(By.name("frame-body"));
+        driver.switchTo().frame(frameBodyElement);
         driver.switchTo().defaultContent();
 
         WebElement frameHeaderElement = driver.findElement(By.name("frame-header"));
         driver.switchTo().frame(frameHeaderElement);
 
         assertThat(driver.findElement(By.className("display-6")).getText()).contains("Frames");
+    }
+
+    @Test
+    @Tag("negative")
+    void FramesInvalidTest() {
+        assertThrows(NoSuchElementException.class, () -> driver.findElement(By.className("lead")));
+
+        WebElement frameBodyElement = driver.findElement(By.name("frame-body"));
+        driver.switchTo().frame(frameBodyElement);
+
+        assertThrows(NoSuchElementException.class, () -> driver.findElement(By.className("display-6")));
     }
 }
