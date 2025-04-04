@@ -2,6 +2,7 @@ package ui;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -32,17 +33,25 @@ public class IFramesTests {
     }
 
     @Test
+    @Tag("positive")
     void IFramesTest() {
+        WebElement iframeElement = driver.findElement(By.id("my-iframe"));
+        driver.switchTo().frame(iframeElement);
+
+        assertThat(driver.findElement(By.className("lead")).getText()).contains("Lorem ipsum dolor sit amet ");
+
+        driver.switchTo().defaultContent();
+        assertThat(driver.findElement(By.className("display-6")).getText()).contains("IFrame");
+    }
+
+    @Test
+    @Tag("negative")
+    void IFramesInvalidTest() {
         assertThrows(NoSuchElementException.class, () -> driver.findElement(By.className("lead")));
 
         WebElement iFrameElement = driver.findElement(By.id("my-iframe"));
         driver.switchTo().frame(iFrameElement);
 
         assertThrows(NoSuchElementException.class, () -> driver.findElement(By.className("display-6")));
-        assertThat(driver.findElement(By.className("lead")).getText()).contains("Lorem ipsum dolor sit amet ");
-
-        driver.switchTo().defaultContent();
-
-        assertThat(driver.findElement(By.className("display-6")).getText()).contains("IFrame");
     }
 }
